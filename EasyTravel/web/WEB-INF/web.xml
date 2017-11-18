@@ -6,19 +6,19 @@
 
     <servlet>
         <servlet-name>MainServlet</servlet-name>
-        <servlet-class>Servlets.MainServlet</servlet-class>
+        <servlet-class>servlets.MainServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>Servlets.LoginServlet</servlet-class>
+        <servlet-class>servlets.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>Servlets.LogoutServlet</servlet-class>
+        <servlet-class>servlets.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegistrationServlet</servlet-name>
-        <servlet-class>Servlets.RegistrationServlet</servlet-class>
+        <servlet-class>servlets.RegistrationServlet</servlet-class>
     </servlet>
 
 
@@ -44,7 +44,7 @@
 
     <filter>
         <filter-name>AuthFilter</filter-name>
-        <filter-class>AuthFilter</filter-class>
+        <filter-class>filters.AuthFilter</filter-class>
     </filter>
 
     <filter-mapping>

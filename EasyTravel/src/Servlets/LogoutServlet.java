@@ -1,6 +1,6 @@
-package Servlets;
+package servlets;
 
-import Helpers.AuthHelper;
+import helpers.AuthHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

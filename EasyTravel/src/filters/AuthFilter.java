@@ -1,5 +1,7 @@
-import Helpers.AuthHelper;
-import Repositories.UsersRepository;
+package filters;
+
+import helpers.AuthHelper;
+import repositories.UsersRepository;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -11,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by Rustem.
  */
-@WebFilter(filterName = "AuthFilter")
+@WebFilter(filterName = "filters.AuthFilter")
 public class AuthFilter implements Filter {
     public void destroy() {
     }

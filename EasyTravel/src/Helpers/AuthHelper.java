@@ -1,7 +1,8 @@
-package Helpers;
+package helpers;
 
-import Entities.User;
-import Repositories.UsersRepository;
+import entities.User;
+import repositories.LoginDataRepository;
+import repositories.UsersRepository;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +22,13 @@ public class AuthHelper {
         return UsersRepository.getRepository().hasUser(user);
     }
 
-    public static void rememberUser(HttpServletResponse response, String username) {
+    public static void rememberUser(HttpServletResponse response, User user) {
         UUID uuid = UUID.randomUUID();
-        addCookie(response, "current_user", username);
+        String login = user.getLoginData().getLogin();
+        addCookie(response, "current_user", login);
         addCookie(response, "token", uuid.toString());
+        LoginDataRepository.getRepository().updateToken(uuid.toString(), login);
+        user.getLoginData().setLogin(uuid.toString());
     }
 
     public static void addCookie(HttpServletResponse response, String name, String value) {

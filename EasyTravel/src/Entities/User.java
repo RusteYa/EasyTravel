@@ -1,18 +1,31 @@
-package Entities;
+package entities;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Rustem.
  */
 public class User {
     private int id;
-    private String login;
-    private String email;
-    private String hashedPassword;
+    private Profile profile;
+    private LoginData loginData;
+    private List<Trip> visitedTrip;
+    private List<Trip> unvisitedTrip;
 
-    public User(String login, String email, String hashedPassword) {
-        this.login = login;
-        this.hashedPassword = hashedPassword;
-        this.email = email;
+    public User(int id, Profile profile, LoginData loginData, List<Trip> visitedTrip, List<Trip> unvisitedTrip) {
+        this.id = id;
+        this.profile = profile;
+        this.loginData = loginData;
+        this.visitedTrip = visitedTrip;
+        this.unvisitedTrip = unvisitedTrip;
+    }
+
+    public User(Profile profile, LoginData loginData) {
+        this.profile = profile;
+        this.loginData = loginData;
+        this.visitedTrip = new ArrayList<>();
+        this.unvisitedTrip = new ArrayList<>();
     }
 
     public int getId() {
@@ -20,31 +33,41 @@ public class User {
     }
 
     public void setId(int id) {
+
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public Profile getProfile() {
+        return profile;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
-    public String getHashedPassword() {
-        return hashedPassword;
+    public LoginData getLoginData() {
+        return loginData;
     }
 
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setLoginData(LoginData loginData) {
+        this.loginData = loginData;
     }
 
-    public String getEmail() {
-        return email;
+    public List<Trip> getVisitedTrip() {
+        return visitedTrip;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setVisitedTrip(List<Trip> visitedTrip) {
+        this.visitedTrip = visitedTrip;
     }
+
+    public List<Trip> getUnVisitedTrip() {
+        return unvisitedTrip;
+    }
+
+    public void setUnvisitedTrip(List<Trip> unvisitedTrip) {
+        this.unvisitedTrip = unvisitedTrip;
+    }
+
+
 }
-

@@ -1,8 +1,8 @@
-package Servlets;
+package servlets;
 
-import Entities.User;
-import Helpers.AuthHelper;
-import Repositories.UsersRepository;
+import entities.User;
+import helpers.AuthHelper;
+import repositories.UsersRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,15 +19,15 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UsersRepository usersRepository = UsersRepository.getRepository();
-        String username = request.getParameter("username");
+        String login = request.getParameter("login");
         String password = request.getParameter("password");
         boolean isRemember = Boolean.parseBoolean(request.getParameter("isRemember"));
-        if (usersRepository.hasUser(username, password)) {
-            if (isRemember) {
-                AuthHelper.rememberUser(response, username);
-            }
-            User user = usersRepository.getUser(username);
+        if (usersRepository.hasUser(login, password)) {
+            User user = usersRepository.getUserByLogin(login);
             AuthHelper.login(request, user);
+            if (isRemember) {
+                AuthHelper.rememberUser(response, user);
+            }
             response.sendRedirect("/");
         } else {
             response.sendRedirect("/login");

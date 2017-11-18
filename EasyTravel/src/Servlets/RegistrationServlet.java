@@ -1,8 +1,12 @@
-package Servlets;
+package servlets;
 
-import Entities.User;
-import Helpers.AuthHelper;
-import Repositories.UsersRepository;
+import entities.LoginData;
+import entities.Profile;
+import entities.User;
+import helpers.AuthHelper;
+import repositories.LoginDataRepository;
+import repositories.ProfileRepository;
+import repositories.UsersRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,9 +26,13 @@ public class RegistrationServlet extends HttpServlet {
         String login = request.getParameter("login");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        User user = new User(login, password, email);
-        if (!usersRepository.hasUsername(login)) {
-            usersRepository.createUser(user);
+        if (!usersRepository.hasLogin(login)) {
+            LoginData loginData = new LoginData(login, email, password, "");
+            loginData.setId(LoginDataRepository.getRepository().createLoginData(loginData));
+            Profile profile = new Profile();
+            profile.setId(ProfileRepository.getRepository().createProfile(profile));
+            User user = new User(profile, loginData);
+            user.setId(usersRepository.createUser(user));
             AuthHelper.login(request, user);
             response.sendRedirect("/");
         }

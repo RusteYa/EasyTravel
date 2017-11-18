@@ -1,11 +1,17 @@
-package Repositories;
+package repositories;
 
-import Entities.User;
-import Helpers.PasswordHasher;
+import entities.LoginData;
+import entities.Profile;
+import entities.Trip;
+import entities.User;
+import helpers.DbHelper;
 
 import javax.servlet.http.Cookie;
-import java.sql.*;
-import java.util.Arrays;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by Rustem.
@@ -15,16 +21,7 @@ public class UsersRepository {
     private Connection connection;
 
     private UsersRepository() {
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/EasyTravel",
-                    "postgres",
-                    "postgres"
-            );
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        this.connection = DbHelper.getConnection();
     }
 
     public static UsersRepository getRepository() {
@@ -34,115 +31,106 @@ public class UsersRepository {
         return repository;
     }
 
-    public void createUser(User user) {
-        byte[] salt = PasswordHasher.getSalt();
-        String hashedPassword = PasswordHasher.getHashedPassword(user.getHashedPassword(), salt);
-        user.setHashedPassword(hashedPassword);
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO users (login, email, hashed_password, salt) VALUES (?, ?, ?, ?)");
-            st.setString(1, user.getLogin());
-            st.setString(2, user.getEmail());
-            st.setString(3, user.getHashedPassword());
-            st.setString(4, Arrays.toString(salt));
-            st.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public int createUser(User user) {
+        int loginDataId = LoginDataRepository.getRepository().createLoginData(user.getLoginData());
+        int profileId = ProfileRepository.getRepository().createProfile(user.getProfile());
+        if (loginDataId != -1 && profileId != -1) {
+            try {
+                PreparedStatement st = connection.prepareStatement(
+                        "INSERT INTO users (login_data_id, profile_id) VALUES (?, ?) RETURNING id");
+                st.setInt(1, profileId);
+                st.setInt(2, loginDataId);
+                st.executeUpdate();
+                ResultSet resultSet = st.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getInt("id");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+        return -1;
     }
 
-    public boolean hasUser(String username, String password) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "SELECT * FROM users WHERE login = ?"
-            );
-            st.setString(1, username);
-            ResultSet resultSet = st.executeQuery();
-            while (resultSet.next()) {
-                byte[] salt = resultSet.getString("salt").getBytes();
-                String hashedPassword = resultSet.getString("hashed_password");
-                if (hashedPassword != null && hashedPassword.equals(
-                        PasswordHasher.getHashedPassword(password, salt))) {
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+    public boolean hasUser(String login, String password) {
+        return LoginDataRepository.getRepository().hasLoginData(login, password);
     }
 
     public boolean hasUser(Cookie loginCookie, Cookie tokenCookie) {
-        try {
-            String login = loginCookie.getValue();
-            String token = tokenCookie.getValue();
-            PreparedStatement st = connection.prepareStatement(
-                    "SELECT * FROM users WHERE login = ?"
-            );
-            st.setString(1, login);
-            ResultSet resultSet = st.executeQuery();
-            while (resultSet.next()) {
-                String dbToken = resultSet.getString("token");
-                if (token != null && token.equals(dbToken)) {
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+        return LoginDataRepository.getRepository().hasLoginData(loginCookie, tokenCookie);
     }
 
     public boolean hasUser(User user) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "SELECT * FROM users WHERE login = ?"
+                    "SELECT * FROM users JOIN login_data ON users.login_data_id = login_data.id " +
+                            "WHERE users.id = ? AND login_data.login = ?"
             );
-            st.setString(1, user.getLogin());
+            st.setInt(1, user.getId());
+            st.setString(2, user.getLoginData().getLogin());
             ResultSet resultSet = st.executeQuery();
-            while (resultSet.next()) {
-                String hashedPassword = resultSet.getString("hashed_password");
-                String userHashedPassword = user.getHashedPassword();
-                if (hashedPassword != null && userHashedPassword != null &&
-                        hashedPassword.equals(userHashedPassword)) {
-                    return true;
-                }
-            }
+            return resultSet.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public boolean hasUsername(String login) {
+    public boolean hasLogin(String login) {
+        return LoginDataRepository.getRepository().hasLogin(login);
+    }
+
+    public User getUserByLogin(String login) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "SELECT users.login FROM users WHERE login = ?"
+                    "SELECT * FROM users " +
+                            "JOIN login_data ON users.login_data_id = login_data.id " +
+                            "WHERE login_data.login = ?"
             );
             st.setString(1, login);
             ResultSet resultSet = st.executeQuery();
-            return resultSet.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public User getUser(String username) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "SELECT * FROM users WHERE login = ?"
-            );
-            st.setString(1, username);
-            ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
-                String hashedPassword = resultSet.getString("hashed_password");
-                String email = resultSet.getString("email");
-                return new User(username, email, hashedPassword);
+                int id = resultSet.getInt("users.id");
+                int loginDataId = resultSet.getInt("users.login_data_id");
+                int profileId = resultSet.getInt("users.profile_id");
+                LoginData loginData = LoginDataRepository.getRepository().getLoginDataById(loginDataId);
+                Profile profile = ProfileRepository.getRepository().getProfileById(profileId);
+                List<Trip> visitedTrips = TripRepository.getRepository().getVisitedTripsForUser(id);
+                List<Trip> unVisitedTrips = TripRepository.getRepository().getUnVisitedTripsForUser(id);
+                return new User(id, profile, loginData, visitedTrips, unVisitedTrips);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public User getUserById(int userId) {
+        try {
+            PreparedStatement st = connection.prepareStatement(
+                    "SELECT * FROM users WHERE id = ?"
+            );
+            st.setInt(1, userId);
+            ResultSet resultSet = st.executeQuery();
+            if (resultSet.next()) {
+                int loginDataId = resultSet.getInt("login_data_id");
+                int profileId = resultSet.getInt("profile_id");
+                LoginData loginData = LoginDataRepository.getRepository().getLoginDataById(loginDataId);
+                Profile profile = ProfileRepository.getRepository().getProfileById(profileId);
+                List<Trip> visitedTrips = TripRepository.getRepository().getVisitedTripsForUser(userId);
+                List<Trip> unVisitedTrips = TripRepository.getRepository().getUnVisitedTripsForUser(userId);
+                return new User(userId, profile, loginData, visitedTrips, unVisitedTrips);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updateUser(User user) {
+        LoginDataRepository.getRepository().updateLoginData(user.getLoginData());
+        ProfileRepository.getRepository().updateProfile(user.getProfile());
+        TripRepository.getRepository().updateVisitedTripsForUser(user);
+        TripRepository.getRepository().updateUnVisitedTripsForUser(user);
     }
 }
