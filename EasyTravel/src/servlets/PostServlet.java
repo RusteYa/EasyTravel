@@ -11,14 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Rustem.
  */
-@WebServlet(name = "MainServlet")
-public class MainServlet extends HttpServlet {
+@WebServlet(name = "PostServlet")
+public class PostServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -27,8 +26,9 @@ public class MainServlet extends HttpServlet {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         Map<String, Object> context = new HashMap<>();
-        List<Post> posts = PostRepository.getRepository().getPosts();
-        context.put("posts", posts);
+        int postId = Integer.parseInt(request.getParameter("post_id"));
+        Post post = PostRepository.getRepository().getPostById(postId);
+        context.put("post", post);
         RenderHelper.render(response, context, "");
     }
 }

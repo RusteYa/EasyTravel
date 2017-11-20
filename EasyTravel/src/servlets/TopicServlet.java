@@ -1,8 +1,8 @@
 package servlets;
 
-import entities.Post;
+import entities.Topic;
 import helpers.RenderHelper;
-import repositories.PostRepository;
+import repositories.TopicRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,14 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Rustem.
  */
-@WebServlet(name = "MainServlet")
-public class MainServlet extends HttpServlet {
+@WebServlet(name = "TopicServlet")
+public class TopicServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -27,8 +26,9 @@ public class MainServlet extends HttpServlet {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         Map<String, Object> context = new HashMap<>();
-        List<Post> posts = PostRepository.getRepository().getPosts();
-        context.put("posts", posts);
+        int topicId = Integer.parseInt(request.getParameter("topic_id"));
+        Topic topic = TopicRepository.getRepository().getTopicById(topicId);
+        context.put("topic", topic);
         RenderHelper.render(response, context, "");
     }
 }

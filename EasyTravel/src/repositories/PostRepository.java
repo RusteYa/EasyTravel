@@ -76,4 +76,55 @@ public class PostRepository {
         }
         return null;
     }
+
+    public Post getPostById(int id) {
+        try {
+            PreparedStatement st = connection.prepareStatement(
+                    "SELECT * FROM post WHERE id = ?"
+            );
+            st.setInt(1, id);
+            ResultSet resultSet = st.executeQuery();
+            if (resultSet.next()) {
+                int author_id = resultSet.getInt("author_id");
+                String photoPath = resultSet.getString("photo_path");
+                String header = resultSet.getString("header");
+                String content = resultSet.getString("content");
+                int likes = resultSet.getInt("likes");
+                int dislikes = resultSet.getInt("dislikes");
+                Date date = resultSet.getTimestamp("date");
+                User user = UsersRepository.getRepository().getUserById(author_id);
+                return new Post(id, user, photoPath, header, content, likes, dislikes, date);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Post> getPosts() {
+        try {
+            PreparedStatement st = connection.prepareStatement(
+                    "SELECT * FROM post"
+            );
+            ResultSet resultSet = st.executeQuery();
+            List<Post> posts = new ArrayList<>();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int author_id = resultSet.getInt("author_id");
+                String photoPath = resultSet.getString("photo_path");
+                String header = resultSet.getString("header");
+                String content = resultSet.getString("content");
+                int likes = resultSet.getInt("likes");
+                int dislikes = resultSet.getInt("dislikes");
+                Date date = resultSet.getTimestamp("date");
+                User user = UsersRepository.getRepository().getUserById(author_id);
+                Post post = new Post(id, user, photoPath, header, content, likes, dislikes, date);
+                posts.add(post);
+            }
+            return posts;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

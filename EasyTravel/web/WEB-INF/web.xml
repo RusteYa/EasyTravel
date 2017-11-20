@@ -20,7 +20,30 @@
         <servlet-name>RegistrationServlet</servlet-name>
         <servlet-class>servlets.RegistrationServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>PostServlet</servlet-name>
+        <servlet-class>servlets.PostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForumServlet</servlet-name>
+        <servlet-class>servlets.ForumServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TopicServlet</servlet-name>
+        <servlet-class>servlets.TopicServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>servlets.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AboutServlet</servlet-name>
+        <servlet-class>servlets.AboutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <servlet-class>servlets.FileUploadServlet</servlet-class>
+    </servlet>
 
 
     <servlet-mapping>
@@ -39,7 +62,30 @@
         <servlet-name>RegistrationServlet</servlet-name>
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>PostServlet</servlet-name>
+        <url-pattern>/post</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForumServlet</servlet-name>
+        <url-pattern>/forum</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TopicServlet</servlet-name>
+        <url-pattern>/topic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AboutServlet</servlet-name>
+        <url-pattern>/about</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
 
 
     <filter>
@@ -51,4 +97,18 @@
         <filter-name>AuthFilter</filter-name>
         <servlet-name>MainServlet</servlet-name>
     </filter-mapping>
+
+
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
 </web-app>
