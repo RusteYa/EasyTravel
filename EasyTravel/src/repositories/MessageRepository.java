@@ -38,7 +38,6 @@ public class MessageRepository {
             st.setString(3, message.getHeader());
             st.setString(4, message.getContent());
             st.setInt(5, message.getTopic().getId());
-            st.executeUpdate();
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt("id");

@@ -20,8 +20,8 @@ public class Profile {
         this.photoPath = photoPath;
     }
 
-    public Profile() {
-        this(0, "", "", "", "", "");
+    public Profile(String name, String surname, String fathersName) {
+        this(0, name, surname, fathersName, "", "");
     }
 
     public int getId() {
@@ -52,7 +52,7 @@ public class Profile {
         return fathersName;
     }
 
-    public void setFathersName(String fathers_name) {
+    public void setFathersName(String fathersName) {
         this.fathersName = fathersName;
     }
 

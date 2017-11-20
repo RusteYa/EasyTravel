@@ -1,6 +1,7 @@
 package servlets;
 
 import entities.Post;
+import entities.User;
 import helpers.RenderHelper;
 import repositories.PostRepository;
 
@@ -29,6 +30,8 @@ public class PostServlet extends HttpServlet {
         int postId = Integer.parseInt(request.getParameter("post_id"));
         Post post = PostRepository.getRepository().getPostById(postId);
         context.put("post", post);
-        RenderHelper.render(response, context, "");
+        User user = (User) request.getSession().getAttribute("current_user");
+        context.put("user", user);
+        RenderHelper.render(response, context, "Post.ftl");
     }
 }

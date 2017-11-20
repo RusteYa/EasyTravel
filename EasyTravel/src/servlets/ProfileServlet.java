@@ -27,6 +27,6 @@ public class ProfileServlet extends HttpServlet {
         Map<String, Object> context = new HashMap<>();
         User user = (User) request.getSession().getAttribute("current_user");
         context.put("user", user);
-        RenderHelper.render(response, context, "");
+        RenderHelper.render(response, context, "Profile.ftl");
     }
 }

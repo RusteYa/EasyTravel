@@ -38,7 +38,6 @@ public class TopicRepository {
             st.setInt(4, topic.getLikes());
             st.setInt(5, topic.getDislikes());
             st.setTimestamp(5, Timestamp.from(topic.getDate().toInstant()));
-            st.executeUpdate();
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt("id");

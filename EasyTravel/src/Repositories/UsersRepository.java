@@ -32,22 +32,21 @@ public class UsersRepository {
     }
 
     public int createUser(User user) {
-        int loginDataId = LoginDataRepository.getRepository().createLoginData(user.getLoginData());
-        int profileId = ProfileRepository.getRepository().createProfile(user.getProfile());
-        if (loginDataId != -1 && profileId != -1) {
-            try {
-                PreparedStatement st = connection.prepareStatement(
-                        "INSERT INTO users (login_data_id, profile_id) VALUES (?, ?) RETURNING id");
-                st.setInt(1, profileId);
-                st.setInt(2, loginDataId);
-                st.executeUpdate();
-                ResultSet resultSet = st.executeQuery();
-                if (resultSet.next()) {
-                    return resultSet.getInt("id");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+        int profileId = user.getProfile().getId();
+        int loginDataId = user.getLoginData().getId();
+        try {
+            PreparedStatement st = connection.prepareStatement(
+                    "INSERT INTO users (login_data_id, profile_id) VALUES (?, ?) RETURNING id");
+            st.setInt(1, loginDataId);
+            st.setInt(2, profileId);
+            ResultSet resultSet = st.executeQuery();
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                System.out.println("Создан user c id " + id);
+                return id;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return -1;
     }
@@ -61,6 +60,7 @@ public class UsersRepository {
     }
 
     public boolean hasUser(User user) {
+        if (user == null) return false;
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT * FROM users JOIN login_data ON users.login_data_id = login_data.id " +
@@ -81,20 +81,23 @@ public class UsersRepository {
     }
 
     public User getUserByLogin(String login) {
+        if (login == null) return null;
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "SELECT * FROM users " +
+                    "SELECT users.id, login_data_id, profile_id FROM users " +
                             "JOIN login_data ON users.login_data_id = login_data.id " +
                             "WHERE login_data.login = ?"
             );
             st.setString(1, login);
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
-                int id = resultSet.getInt("users.id");
-                int loginDataId = resultSet.getInt("users.login_data_id");
-                int profileId = resultSet.getInt("users.profile_id");
+                int id = resultSet.getInt("id");
+                int loginDataId = resultSet.getInt("login_data_id");
+                int profileId = resultSet.getInt("profile_id");
                 LoginData loginData = LoginDataRepository.getRepository().getLoginDataById(loginDataId);
+                loginData.setId(loginDataId);
                 Profile profile = ProfileRepository.getRepository().getProfileById(profileId);
+                profile.setId(profileId);
                 List<Trip> visitedTrips = TripRepository.getRepository().getVisitedTripsForUser(id);
                 List<Trip> unVisitedTrips = TripRepository.getRepository().getUnVisitedTripsForUser(id);
                 return new User(id, profile, loginData, visitedTrips, unVisitedTrips);
@@ -128,6 +131,7 @@ public class UsersRepository {
     }
 
     public void updateUser(User user) {
+        if (user == null) return;
         LoginDataRepository.getRepository().updateLoginData(user.getLoginData());
         ProfileRepository.getRepository().updateProfile(user.getProfile());
         TripRepository.getRepository().updateVisitedTripsForUser(user);

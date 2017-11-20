@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 /**
  * Created by Rustem.
@@ -39,12 +38,14 @@ public class LoginDataRepository {
             st.setString(1, loginData.getLogin());
             st.setString(2, loginData.getEmail());
             st.setString(3, loginData.getHashedPassword());
-            st.setString(4, Arrays.toString(salt));
-            st.setString(4, loginData.getToken());
-            st.executeUpdate();
+            System.out.println(new String(salt));
+            st.setString(4, new String(salt));
+            st.setString(5, loginData.getToken());
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getInt("id");
+                int id = resultSet.getInt("id");
+                System.out.println("Создано login_data с id " + id);
+                return id;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,15 +55,22 @@ public class LoginDataRepository {
 
     public void updateLoginData(LoginData loginData) {
         try {
+            System.out.println(loginData.getEmail());
+            System.out.println(loginData.getId());
             PreparedStatement st = connection.prepareStatement(
                     "UPDATE login_data SET login = ?, hashed_password = ?, " +
-                            "email = ?, token = ? WHERE id = ?");
+                            "email = ? WHERE id = ?");
             st.setString(1, loginData.getLogin());
             st.setString(2, loginData.getHashedPassword());
             st.setString(3, loginData.getEmail());
-            st.setString(4, loginData.getToken());
-            st.setInt(5, loginData.getId());
+            st.setInt(4, loginData.getId());
             st.executeUpdate();
+            st = connection.prepareStatement(
+                    "SELECT email FROM login_data WHERE id = ?");
+            st.setInt(1, loginData.getId());
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            System.out.println(rs.getString("email"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,7 +83,7 @@ public class LoginDataRepository {
             );
             st.setString(1, login);
             ResultSet resultSet = st.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 byte[] salt = resultSet.getString("salt").getBytes();
                 String hashedPassword = resultSet.getString("hashed_password");
                 if (hashedPassword != null && hashedPassword.equals(
@@ -113,11 +121,13 @@ public class LoginDataRepository {
     public boolean hasLogin(String login) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "SELECT login_data.login FROM login_data WHERE login = ?"
+                    "SELECT login FROM login_data WHERE login = ?"
             );
             st.setString(1, login);
             ResultSet resultSet = st.executeQuery();
-            return resultSet.next();
+            boolean b = resultSet.next();
+            System.out.println("Логин имеется в базе данных " + b);
+            return b;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -147,11 +157,11 @@ public class LoginDataRepository {
     public void updateToken(String token, String login) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "UPDATE login_data SET token = ? WHERE id = ?"
+                    "UPDATE login_data SET token = ? WHERE login = ?"
             );
             st.setString(1, token);
             st.setString(2, login);
-            st.executeQuery();
+            st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

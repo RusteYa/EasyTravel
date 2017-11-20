@@ -1,6 +1,7 @@
 package servlets;
 
 import entities.Topic;
+import entities.User;
 import helpers.RenderHelper;
 import repositories.TopicRepository;
 
@@ -29,6 +30,8 @@ public class TopicServlet extends HttpServlet {
         int topicId = Integer.parseInt(request.getParameter("topic_id"));
         Topic topic = TopicRepository.getRepository().getTopicById(topicId);
         context.put("topic", topic);
-        RenderHelper.render(response, context, "");
+        User user = (User) request.getSession().getAttribute("current_user");
+        context.put("user", user);
+        RenderHelper.render(response, context, "Topic.ftl");
     }
 }

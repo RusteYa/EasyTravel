@@ -34,7 +34,6 @@ public class TripRepository {
             PreparedStatement st = connection.prepareStatement(
                     "INSERT INTO trip (name) VALUES (?)  RETURNING id");
             st.setString(1, trip.getName());
-            st.executeUpdate();
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt("id");
@@ -60,7 +59,7 @@ public class TripRepository {
             );
             st.setInt(1, user.getId());
             st.setBoolean(2, true);
-            st.executeQuery();
+            st.executeUpdate();
             for (Trip trip : trips) {
                 st = connection.prepareStatement(
                         "INSERT INTO user_trip (user_id, trip_id, visited) VALUES (?, ?, ?)"

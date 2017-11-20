@@ -15,10 +15,12 @@ import java.io.IOException;
 @WebServlet(name = "LogoutServlet")
 public class LogoutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        AuthHelper.logout(request, response);
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        System.out.println("Logout");
+        AuthHelper.logout(request, response);
+        response.sendRedirect("/");
     }
 }

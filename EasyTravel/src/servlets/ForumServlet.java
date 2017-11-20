@@ -1,6 +1,7 @@
 package servlets;
 
 import entities.Topic;
+import entities.User;
 import helpers.RenderHelper;
 import repositories.TopicRepository;
 
@@ -29,6 +30,8 @@ public class ForumServlet extends HttpServlet {
         Map<String, Object> context = new HashMap<>();
         List<Topic> topics = TopicRepository.getRepository().getTopics();
         context.put("topics", topics);
-        RenderHelper.render(response, context, "");
+        User user = (User) request.getSession().getAttribute("current_user");
+        context.put("user", user);
+        RenderHelper.render(response, context, "Forum.ftl");
     }
 }

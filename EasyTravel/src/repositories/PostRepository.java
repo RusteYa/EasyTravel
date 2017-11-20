@@ -39,7 +39,6 @@ public class PostRepository {
             st.setInt(5, post.getLikes());
             st.setInt(6, post.getDislikes());
             st.setTimestamp(7, Timestamp.from(post.getDate().toInstant()));
-            st.executeUpdate();
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt("id");

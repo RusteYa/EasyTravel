@@ -15,6 +15,9 @@ import java.util.UUID;
 public class AuthHelper {
     public static void login(HttpServletRequest request, User user) {
         request.getSession().setAttribute("current_user", user);
+        if (user != null) {
+            System.out.println("Авторизовался " + user.getLoginData().getLogin());
+        }
     }
 
     public static boolean isLogin(HttpServletRequest request) {
@@ -29,6 +32,7 @@ public class AuthHelper {
         addCookie(response, "token", uuid.toString());
         LoginDataRepository.getRepository().updateToken(uuid.toString(), login);
         user.getLoginData().setLogin(uuid.toString());
+        System.out.println("Запомнить меня " + login);
     }
 
     public static void addCookie(HttpServletResponse response, String name, String value) {

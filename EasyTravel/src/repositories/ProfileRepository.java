@@ -35,10 +35,11 @@ public class ProfileRepository {
             st.setString(3, profile.getFathersName());
             st.setString(4, profile.getPhotoPath());
             st.setString(5, profile.getUserDataFile());
-            st.executeUpdate();
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getInt("id");
+                int id = resultSet.getInt("id");
+                System.out.println("Создан profile с id " + id);
+                return id;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,7 +76,7 @@ public class ProfileRepository {
                 String surname = resultSet.getString("surname");
                 String fathersName = resultSet.getString("fathers_name");
                 String photoPath = resultSet.getString("photo_path");
-                String userDataFile = resultSet.getString("user_data_path");
+                String userDataFile = resultSet.getString("user_data_file");
                 return new Profile(id, name, surname, fathersName, userDataFile, photoPath);
             }
         } catch (SQLException e) {

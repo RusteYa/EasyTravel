@@ -1,5 +1,6 @@
 package servlets;
 
+import entities.User;
 import helpers.RenderHelper;
 
 import javax.servlet.ServletException;
@@ -24,6 +25,8 @@ public class AboutServlet extends HttpServlet {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         Map<String, Object> context = new HashMap<>();
-        RenderHelper.render(response, context, "");
+        User user = (User) request.getSession().getAttribute("current_user");
+        context.put("user", user);
+        RenderHelper.render(response, context, "About.ftl");
     }
 }

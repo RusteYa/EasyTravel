@@ -1,5 +1,6 @@
 package filters;
 
+import entities.User;
 import helpers.AuthHelper;
 import repositories.UsersRepository;
 
@@ -27,6 +28,8 @@ public class AuthFilter implements Filter {
             Cookie tokenCookie = AuthHelper.getCookie(req, "token");
             if (loginCookie != null && tokenCookie != null &&
                     UsersRepository.getRepository().hasUser(loginCookie, tokenCookie)) {
+                User user = UsersRepository.getRepository().getUserByLogin(loginCookie.getValue());
+                AuthHelper.login(req, user);
                 chain.doFilter(request, response);
             } else {
                 ((HttpServletResponse) response).sendRedirect("/login");

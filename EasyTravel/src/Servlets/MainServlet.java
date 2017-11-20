@@ -29,6 +29,7 @@ public class MainServlet extends HttpServlet {
         Map<String, Object> context = new HashMap<>();
         List<Post> posts = PostRepository.getRepository().getPosts();
         context.put("posts", posts);
-        RenderHelper.render(response, context, "");
+        context.put("user", request.getSession().getAttribute("current_user"));
+        RenderHelper.render(response, context, "Main.ftl");
     }
 }

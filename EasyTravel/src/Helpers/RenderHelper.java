@@ -21,7 +21,7 @@ public class RenderHelper {
     private static Configuration getCfg() throws IOException {
         if (cfg == null) {
             cfg = new Configuration(Configuration.VERSION_2_3_27);
-            cfg.setDirectoryForTemplateLoading(new File("C:/EasyTravel/web/templates"));
+            cfg.setDirectoryForTemplateLoading(new File("C:\\EasyTravel\\EasyTravel\\EasyTravel\\web\\templates"));
             cfg.setDefaultEncoding("utf-8");
             cfg.setLocale(Locale.US);
             cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);

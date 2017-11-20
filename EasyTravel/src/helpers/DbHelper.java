@@ -8,7 +8,7 @@ import java.sql.SQLException;
  * Created by Rustem.
  */
 public class DbHelper {
-    private final static String dbURL = "jdbc:postgresql://localhost:5432/EasyTravel";
+    private final static String dbURL = "jdbc:postgresql://localhost:5432/easy_travel";
     private final static String user = "postgres";
     private final static String password = "postgres";
 
