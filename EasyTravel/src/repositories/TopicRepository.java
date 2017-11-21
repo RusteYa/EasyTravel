@@ -30,14 +30,15 @@ public class TopicRepository {
     public int createTopic(Topic topic) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO topic (topicstarter_id, content, header, likes, dislikes, date) " +
-                            "VALUES (?, ?, ?, ?, ?, ?)  RETURNING id");
+                    "INSERT INTO topic (topicstarter_id, content, header, likes, dislikes, date, photo_path) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?)  RETURNING id");
             st.setInt(1, topic.getTopicStarter().getId());
             st.setString(2, topic.getContent());
             st.setString(3, topic.getHeader());
             st.setInt(4, topic.getLikes());
             st.setInt(5, topic.getDislikes());
             st.setTimestamp(5, Timestamp.from(topic.getDate().toInstant()));
+            st.setString(6, topic.getPhotoPath());
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt("id");
@@ -62,8 +63,9 @@ public class TopicRepository {
                 int likes = resultSet.getInt("likes");
                 int dislikes = resultSet.getInt("dislikes");
                 Date date = resultSet.getTimestamp("date");
+                String photoPath = resultSet.getString("photo_path");
                 User user = UsersRepository.getRepository().getUserById(topicStarterId);
-                return new Topic(id, user, content, date, header, likes, dislikes);
+                return new Topic(id, user, content, date, header, likes, dislikes, photoPath);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,8 +88,9 @@ public class TopicRepository {
                 int likes = resultSet.getInt("likes");
                 int dislikes = resultSet.getInt("dislikes");
                 Date date = resultSet.getTimestamp("date");
+                String photoPath = resultSet.getString("photo_path");
                 User user = UsersRepository.getRepository().getUserById(topicStarterId);
-                Topic topic = new Topic(id, user, content, date, header, likes, dislikes);
+                Topic topic = new Topic(id, user, content, date, header, likes, dislikes, photoPath);
                 topics.add(topic);
             }
             return topics;

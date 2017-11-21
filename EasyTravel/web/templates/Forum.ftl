@@ -235,7 +235,7 @@
             margin-left: 20%;
         }
 
-        #post {
+        #place {
             border: 2px solid #ddd;
             height: 450px;
             width: 700px;
@@ -360,12 +360,6 @@
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 </#if>
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-default">Поиск</button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -375,85 +369,21 @@
     <div id="wrapper">
 
         <div id="articles">
+        <#list topics as topic>
             <div id="user">
-                <img src="../img/user.png" width="64" height="64">
-                <font size="+1"> User</font>
+                <img src="${topic.topicStarter.profile.photoPath}" width="64" height="64">
+                <font size="+1">${topic.topicStarter.profile.name}</font>
             </div>
             <article>
-                <img src="../img/1.jpg" alt="IMAGE" title="IMAGE"/>
-                <h4> Пляж</h4>
-                <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                    хороший пляж </p>
-                <p>27.10.2007</p>
-                <a href="/topic?topic_id=1" title="Подробнее">Подробнее</a>
+                <img src="${topic.photoPath}" alt="IMAGE" title="IMAGE"/>
+                <h4>${topic.header}</h4>
+                <p>${topic.content}</p>
+                <p>${topic.date}</p>
+                <a href="/topic?topic_id=${topic.id}" title="Подробнее">Подробнее</a>
             </article>
-            <div id="user">
-                <img src="../img/user.png" width="64" height="64">
-                <font size="+1"> User</font>
-            </div>
-            <article>
-                <img src="../img/1.jpg" alt="IMAGE" title="IMAGE"/>
-                <h4> Пляж</h4>
-                <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                    хороший пляж </p>
-                <p>27.10.2007</p>
-                <a href="/topic?topic_id=1" title="Подробнее">Подробнее</a>
-            </article>
-            <div id="user">
-                <img src="../img/user.png" width="64" height="64">
-                <font size="+1"> User</font>
-            </div>
-            <article>
-                <img src="../img/1.jpg" alt="IMAGE" title="IMAGE"/>
-                <h4> Пляж</h4>
-                <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                    хороший пляж </p>
-                <p>27.10.2007</p>
-                <a href="/topic?topic_id=1" title="Подробнее">Подробнее</a>
-            </article>
+
+        </#list>
         </div>
-        <p></p>
-        <div id="articles">
-            <div id="user">
-                <img src="../img/user.png" width="64" height="64">
-                <font size="+1"> User</font>
-            </div>
-            <article>
-
-                <img src="../img/1.jpg" alt="IMAGE" title="IMAGE"/>
-                <h4> Пляж</h4>
-                <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                    хороший пляж </p>
-                <p>27.10.2007</p>
-                <a href="/topic?topic_id=1" title="Подробнее">Подробнее</a>
-            </article>
-            <div id="user">
-                <img src="../img/user.png" width="64" height="64">
-                <font size="+1"> User</font>
-            </div>
-            <article>
-                <img src="../img/1.jpg" alt="IMAGE" title="IMAGE"/>
-                <h4> Пляж</h4>
-                <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                    хороший пляж </p>
-                <p>27.10.2007</p>
-                <a href="/topic?topic_id=1" title="Подробнее">Подробнее</a>
-            </article>
-            <div id="user">
-                <img src="../img/user.png" width="64" height="64">
-                <font size="+1"> User</font>
-            </div>
-            <article>
-                <img src="../img/1.jpg" alt="IMAGE" title="IMAGE"/>
-                <h4> Пляж</h4>
-                <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                    хороший пляж </p>
-                <p>27.10.2007</p>
-                <a href="/topic?topic_id=1" title="Подробнее">Подробнее</a>
-            </article>
-        </div>
-
-
     </div>
 </div>
 <footer>

@@ -74,7 +74,7 @@
 <body class="container">
 <div class="login" style="margin:auto;width:30%;">
     <h3><strong>Регистрация</strong></h3>
-    <form method="post" action="/registration">
+    <form method="place" action="/registration">
         <div class="form-group">
             <input type="text" class="form-control" name="name" placeholder="Имя">
         </div>

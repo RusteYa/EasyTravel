@@ -347,23 +347,15 @@
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 </#if>
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-default">Поиск</button>
-                    </form>
                 </div>
             </div>
         </nav>
     </header>
     <div id="posts">
         <center>
-            <h2> Пляж</h2>
-            <img src="../img/post.jpg" alt="IMAGE" title="IMAGE"/>
-            <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж
-                Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж</p>
+            <h2>${post.header}</h2>
+            <img src="${post.photoPath}" alt="IMAGE" title="IMAGE"/>
+            <p>${post.content}</p>
         </center>
     </div>
     <div id="wrapper">

@@ -5,20 +5,20 @@ import java.util.Date;
 /**
  * Created by Rustem.
  */
-public class Post {
+public class Place {
     private int id;
     private User author;
-    private String photo_path;
+    private String photoPath;
     private String header;
     private String content;
     private int likes;
     private int dislikes;
     private Date date;
 
-    public Post(int id, User author, String photo_path, String header, String content, int likes, int dislikes, Date date) {
+    public Place(int id, User author, String photoPath, String header, String content, int likes, int dislikes, Date date) {
         this.id = id;
         this.author = author;
-        this.photo_path = photo_path;
+        this.photoPath = photoPath;
         this.header = header;
         this.content = content;
         this.likes = likes;
@@ -42,12 +42,12 @@ public class Post {
         this.author = author;
     }
 
-    public String getPhoto_path() {
-        return photo_path;
+    public String getPhotoPath() {
+        return photoPath;
     }
 
-    public void setPhoto_path(String photo_path) {
-        this.photo_path = photo_path;
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     public String getHeader() {

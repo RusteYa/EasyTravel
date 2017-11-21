@@ -13,8 +13,9 @@ public class Topic {
     private Date date;
     private int likes;
     private int dislikes;
+    private String photoPath;
 
-    public Topic(int id, User topicStarter, String content, Date date, String header, int likes, int dislikes) {
+    public Topic(int id, User topicStarter, String content, Date date, String header, int likes, int dislikes, String photoPath) {
         this.id = id;
         this.topicStarter = topicStarter;
         this.content = content;
@@ -22,6 +23,15 @@ public class Topic {
         this.date = date;
         this.likes = likes;
         this.dislikes = dislikes;
+        this.photoPath = photoPath;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     public int getId() {

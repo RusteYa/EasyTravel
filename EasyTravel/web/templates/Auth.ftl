@@ -74,7 +74,7 @@
 <body class="container">
 <div class="login" style="margin:auto;width:30%;">
     <h3><strong>Войти</strong></h3>
-    <form action="/login" method="post">
+    <form action="/login" method="place">
         <div class="form-group">
             <input type="text" class="form-control" name="login" placeholder="Логин">
         </div>

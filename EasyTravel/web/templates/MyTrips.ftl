@@ -242,7 +242,7 @@
             margin-left: 20%;
         }
 
-        #post {
+        #place {
             border: 2px solid #ddd;
             height: 450px;
             width: 700px;
@@ -367,12 +367,6 @@
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 </#if>
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-default">Поиск</button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -398,22 +392,20 @@
                 <h4> Пляж</h4>
                 <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
                     хороший пляж </p>
-                <a href="/post?post_id=1" title="Подробнее">Подробнее</a>
+                <a href="/place?post_id=1" title="Подробнее">Подробнее</a>
             </article>
             <article>
                 <img src="../img/1.jpg" alt="IMAGE" title="IMAGE"/>
                 <h4> Пляж</h4>
                 <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
                     хороший пляж </p>
-                <a href="/post?post_id=1" title="Подробнее">Подробнее</a>
+                <a href="/place?post_id=1" title="Подробнее">Подробнее</a>
             </article>
         </div>
 
     </div>
 </div>
-<center>
-    <button type="submit" class="btn btn-default " style="margin:10px;">Собираюсь в путешествие</button>
-</center>
+
 <footer>
     <span class="left">Все права защищены &copy; 2017</span>
 </footer>

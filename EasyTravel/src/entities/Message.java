@@ -22,6 +22,10 @@ public class Message {
         this.topic = topic;
     }
 
+    public Message(User author, String content, Topic topic) {
+        this(0, author, new Date(), "", content, topic);
+    }
+
     public int getId() {
         return id;
     }

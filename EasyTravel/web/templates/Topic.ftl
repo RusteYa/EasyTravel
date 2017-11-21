@@ -12,6 +12,7 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script type="text/javascript" language="JavaScript" src="/js/jquery-3.2.1.min.js"></script>
     <title>Easy Travel</title>
     <style>
         * {
@@ -112,11 +113,11 @@
 
         }
 
-        #posts {
+        #places {
             float: left;
         }
 
-        #posts img {
+        #places img {
             width: 50%;
             height: 50%;
             border-radius: 5px 5px 0px 0px;
@@ -124,12 +125,12 @@
             margin-bottom: 10px;
         }
 
-        #posts p {
+        #places p {
             width: 50%;
             align: justify;
         }
 
-        wellrow #post {
+        wellrow #place {
         }
 
         #wrapper {
@@ -322,6 +323,7 @@
 
         }
     </style>
+
 </head>
 <body>
 <div id="page-wrap">
@@ -357,85 +359,53 @@
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 </#if>
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-default">Поиск</button>
-                    </form>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div id="posts">
+    <div id="places">
 
         <center>
             <div class="col-lg-2">
-                <img src="../img/user.png" width="64" height="64">
-                <font size="+3"> User</font>
+                <img src="${topic.topicStarter.profile.photoPath}" width="64" height="64">
+                <font size="+3">${topic.topicStarter.profile.name}</font>
             </div>
             <div class="clearfix"></div>
-            <h2> Пляж</h2>
-            <img src="../img/post.jpg" alt="IMAGE" title="IMAGE"/>
-            <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж
-                Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж</p>
+            <h2>${topic.header}</h2>
+            <img src="${topic.photoPath}" alt="IMAGE" title="IMAGE"/>
+            <p>${topic.content}</p>
         </center>
     </div>
     <div id="wrapper">
-        <div id="articles">
-            <div class="well row">
-                <div class="pull-right"><font size="4"><span class="glyphicon glyphicon-remove"></span></font></div>
-                <div class="col-lg-2">
-                    <img src="../img/user.png" width="64" height="64">
-                    <font size="+1"> User</font>
+        <div id="messages">
+        <#list messages as message>
+            <div id="articles">
+                <div class="well row">
+                    <div class="col-lg-2">
+                        <img src="${message.author.profile.photoPath}" width="64" height="64">
+                        <font size="+1">${message.author.profile.name}</font>
+                    </div>
+                    <div class="col-lg-6 col-lg-offset-1">
+                        <font size="+1"><p>${message.content}</p></font>
+                    ${message.date}
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="col-lg-6 col-lg-offset-1">
-                    <font size="+1"><p>Классное место!</p></font>
-                    01.01.2007 00:00
-                </div>
-                <div class="clearfix"></div>
             </div>
+        </#list>
         </div>
-        <div id="articles">
-            <div class="well row">
-                <div class="pull-right"><font size="4"><span class="glyphicon glyphicon-remove"></span></font></div>
-                <div class="col-lg-2">
-                    <img src="../img/user.png" width="64" height="64">
-                    <font size="+1"> User</font>
-                </div>
-                <div class="col-lg-6 col-lg-offset-1">
-                    <font size="+1"><p>Классное место!</p></font>
-                    01.01.2007 00:00
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div id="articles">
-            <div class="well row">
-                <div class="pull-right"><font size="4"><span class="glyphicon glyphicon-remove"></span></font></div>
-                <div class="col-lg-2">
-                    <img src="../img/user.png" width="64" height="64">
-                    <font size="+1"> User</font>
-                </div>
-                <div class="col-lg-6 col-lg-offset-1">
-                    <font size="+1"><p>Классное место!</p></font>
-                    01.01.2007 00:00
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-
         <div id="wellrow">
             <center>
-                <form action="/topic">
+                <div>
                     <div class="input-group commentary-input-field bottom-padding" style="width:100%;">
-                        <textarea class="form-control" name="commentary" rows="3"
+                        <textarea id="message" class="form-control" name="commentary" rows="3"
                                   placeholder="Написать комментарий"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right" style="margin:10px;">Отправить</button>
-                </form>
+                    <button id="send" class="btn btn-primary pull-right" style="margin:10px;">
+                        Отправить
+                    </button>
+                </div>
             </center>
         </div>
     </div>
@@ -443,5 +413,82 @@
 <footer>
     <span class="left">Все права защищены &copy; 2017</span>
 </footer>
+
+<script type="text/javascript" language="JavaScript">
+    $("#send").on("click", function send_msg() {
+        var msg = $("#message").val();
+        if (msg !== null && msg !== undefined && msg !== "") {
+            $.ajax({
+                        type: 'POST',
+                        url: "/topic",
+                        data: {"message": msg, "topic_id": ${topic.id}},
+                        success: function (data, status) {
+                            /*
+                            var articles = $('<div/>', {
+                                id: "articles"
+                            });
+                            var well_row = $('<div/>', {
+                                class: "well row"
+                            });
+                            var col1 = $('<div/>', {
+                                class: "col-lg-2"
+                            });
+                            col1
+                                    .append($('<img/>', {
+                                        src: data.userPhotoPath,
+                                        width: "64",
+                                        height: "64"
+                                    }))
+                                    .append($('<font/>', {
+                                                size: "+1"
+                                            })
+                                                    .append($('<p/>', {
+                                                        text: data.userName
+                                                    }))
+                                    );
+                            var col2 = $('<div/>', {
+                                class: "col-lg-6 col-lg-offset-1"
+                            });
+                            col2.append($('<font/>', {
+                                        size: "+1"
+                                    })
+                                            .append($('<p/>', {
+                                                text: msg
+                                            }))
+                            ).append($('<p/>', {
+                                text: data.date
+                            }));
+                            well_row.append(col1).append(col2).append($('<div/>', {
+                                class: "clearfix"
+                            }));
+                            articles.append(well_row);
+                            $('#messages').append(articles);
+                            */
+
+                            $('#messages').append("<div id=\"articles\">" +
+                                    "                <div class=\"well row\">" +
+                                    "                    <div class=\"col-lg-2\">" +
+                                    "                        <img src=\"" + data.userPhotoPath + "\" width=\"64\" height=\"64\">" +
+                                    "                        <font size=\"+1\">" + data.userName + "</font>" +
+                                    "                    </div>" +
+                                    "                    <div class=\"col-lg-6 col-lg-offset-1\">" +
+                                    "                        <font size=\"+1\"><p>" + msg + "</p></font>" +
+                                    "                    " + data.date +
+                                    "                    </div>" +
+                                    "                    <div class=\"clearfix\"></div>" +
+                                    "                </div>" +
+                                    "            </div>");
+                            $("#message").val("");
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    }
+            )
+        }
+    })
+    ;
+
+</script>
 </body>
 </html>

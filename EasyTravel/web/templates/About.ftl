@@ -235,7 +235,7 @@
             margin-left: 20%;
         }
 
-        #post {
+        #place {
             border: 2px solid #ddd;
             height: 450px;
             width: 700px;
@@ -361,12 +361,6 @@
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 </#if>
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-default">Поиск</button>
-                    </form>
                 </div>
             </div>
         </nav>

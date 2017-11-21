@@ -37,6 +37,7 @@ public class MessageRepository {
             st.setTimestamp(2, Timestamp.from(message.getDate().toInstant()));
             st.setString(3, message.getHeader());
             st.setString(4, message.getContent());
+            System.out.println(message.getTopic());
             st.setInt(5, message.getTopic().getId());
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {

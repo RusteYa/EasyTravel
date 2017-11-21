@@ -1,9 +1,9 @@
 package servlets;
 
-import entities.Post;
+import entities.Place;
 import entities.User;
 import helpers.RenderHelper;
-import repositories.PostRepository;
+import repositories.PlaceRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +17,8 @@ import java.util.Map;
 /**
  * Created by Rustem.
  */
-@WebServlet(name = "PostServlet")
-public class PostServlet extends HttpServlet {
+@WebServlet(name = "PlaceServlet")
+public class PlaceServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -28,10 +28,10 @@ public class PostServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         Map<String, Object> context = new HashMap<>();
         int postId = Integer.parseInt(request.getParameter("post_id"));
-        Post post = PostRepository.getRepository().getPostById(postId);
-        context.put("post", post);
+        Place place = PlaceRepository.getRepository().getPlaceById(postId);
+        context.put("place", place);
         User user = (User) request.getSession().getAttribute("current_user");
         context.put("user", user);
-        RenderHelper.render(response, context, "Post.ftl");
+        RenderHelper.render(response, context, "Place.ftl");
     }
 }

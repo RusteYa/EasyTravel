@@ -1,6 +1,6 @@
 package repositories;
 
-import entities.Post;
+import entities.Place;
 import entities.User;
 import helpers.DbHelper;
 
@@ -12,33 +12,33 @@ import java.util.List;
 /**
  * Created by Rustem.
  */
-public class PostRepository {
-    private static PostRepository repository;
+public class PlaceRepository {
+    private static PlaceRepository repository;
     private Connection connection;
 
-    private PostRepository() {
+    private PlaceRepository() {
         this.connection = DbHelper.getConnection();
     }
 
-    public static PostRepository getRepository() {
+    public static PlaceRepository getRepository() {
         if (repository == null) {
-            repository = new PostRepository();
+            repository = new PlaceRepository();
         }
         return repository;
     }
 
-    public int createPost(Post post) {
+    public int createPlace(Place place) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO post (author_id, photo_path, header, content, likes, dislikes, date) " +
+                    "INSERT INTO place (author_id, photo_path, header, content, likes, dislikes, date) " +
                             "VALUES (?, ?, ?, ?, ?, ?, ?)  RETURNING id");
-            st.setInt(1, post.getAuthor().getId());
-            st.setString(2, post.getPhoto_path());
-            st.setString(3, post.getHeader());
-            st.setString(4, post.getContent());
-            st.setInt(5, post.getLikes());
-            st.setInt(6, post.getDislikes());
-            st.setTimestamp(7, Timestamp.from(post.getDate().toInstant()));
+            st.setInt(1, place.getAuthor().getId());
+            st.setString(2, place.getPhotoPath());
+            st.setString(3, place.getHeader());
+            st.setString(4, place.getContent());
+            st.setInt(5, place.getLikes());
+            st.setInt(6, place.getDislikes());
+            st.setTimestamp(7, Timestamp.from(place.getDate().toInstant()));
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt("id");
@@ -49,15 +49,15 @@ public class PostRepository {
         return -1;
     }
 
-    public List<Post> getPostsForUser(User user) {
+    public List<Place> getPlacesForUser(User user) {
         try {
             int userId = user.getId();
             PreparedStatement st = connection.prepareStatement(
-                    "SELECT * FROM post WHERE author_id = ?"
+                    "SELECT * FROM place WHERE author_id = ?"
             );
             st.setInt(1, userId);
             ResultSet resultSet = st.executeQuery();
-            List<Post> posts = new ArrayList<>();
+            List<Place> places = new ArrayList<>();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String photoPath = resultSet.getString("photo_path");
@@ -66,20 +66,20 @@ public class PostRepository {
                 int likes = resultSet.getInt("likes");
                 int dislikes = resultSet.getInt("dislikes");
                 Date date = resultSet.getTimestamp("date");
-                Post post = new Post(id, user, photoPath, header, content, likes, dislikes, date);
-                posts.add(post);
+                Place place = new Place(id, user, photoPath, header, content, likes, dislikes, date);
+                places.add(place);
             }
-            return posts;
+            return places;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public Post getPostById(int id) {
+    public Place getPlaceById(int id) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "SELECT * FROM post WHERE id = ?"
+                    "SELECT * FROM place WHERE id = ?"
             );
             st.setInt(1, id);
             ResultSet resultSet = st.executeQuery();
@@ -92,7 +92,7 @@ public class PostRepository {
                 int dislikes = resultSet.getInt("dislikes");
                 Date date = resultSet.getTimestamp("date");
                 User user = UsersRepository.getRepository().getUserById(author_id);
-                return new Post(id, user, photoPath, header, content, likes, dislikes, date);
+                return new Place(id, user, photoPath, header, content, likes, dislikes, date);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,13 +100,13 @@ public class PostRepository {
         return null;
     }
 
-    public List<Post> getPosts() {
+    public List<Place> getPlace() {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "SELECT * FROM post"
+                    "SELECT * FROM place"
             );
             ResultSet resultSet = st.executeQuery();
-            List<Post> posts = new ArrayList<>();
+            List<Place> places = new ArrayList<>();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 int author_id = resultSet.getInt("author_id");
@@ -117,10 +117,10 @@ public class PostRepository {
                 int dislikes = resultSet.getInt("dislikes");
                 Date date = resultSet.getTimestamp("date");
                 User user = UsersRepository.getRepository().getUserById(author_id);
-                Post post = new Post(id, user, photoPath, header, content, likes, dislikes, date);
-                posts.add(post);
+                Place place = new Place(id, user, photoPath, header, content, likes, dislikes, date);
+                places.add(place);
             }
-            return posts;
+            return places;
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -12,6 +12,7 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script type="text/javascript" language="JavaScript" src="/js/jquery-3.2.1.min.js"></script>
     <title>Easy Travel</title>
     <style>
         * {
@@ -229,7 +230,7 @@
             margin-left: 20%;
         }
 
-        #post {
+        #place {
             border: 2px solid #ddd;
             height: 450px;
             width: 700px;
@@ -320,6 +321,7 @@
 
         }
     </style>
+
 </head>
 <body>
 <div id="page-wrap">
@@ -355,12 +357,15 @@
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 </#if>
-                    <form class="navbar-form navbar-right">
+                    <div class="navbar-form navbar-right">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="">
+                            <input id="input_req" type="text" class="form-control" placeholder="">
                         </div>
-                        <button type="submit" class="btn btn-default">Поиск</button>
-                    </form>
+                        <select id="select_req_type" class="form-control">
+                            <option value="header">По заголовку</option>
+                            <option selected="selected" value="content">По содержанию</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -376,27 +381,15 @@
     </center>
     <div id="wrapper">
         <div id="articles">
+        <#list places as place>
             <article>
-                <img src="../img/1.jpg" alt="IMAGE" title="IMAGE"/>
-                <h4> Пляж</h4>
-                <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                    хороший пляж </p>
-                <a href="/post?post_id=1" title="Подробнее">Подробнее</a>
+                <img src="${place.photoPath}" alt="IMAGE" title="IMAGE"/>
+                <h4>${place.header}</h4>
+                <p>${place.content}</p>
+                <a href="/place?post_id=${place.id}" title="Подробнее">Подробнее</a>
             </article>
-            <article>
-                <img src="../img/1.jpg" alt="IMAGE" title="IMAGE"/>
-                <h4> Пляж</h4>
-                <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                    хороший пляж </p>
-                <a href="/post?post_id=1" title="Подробнее">Подробнее</a>
-            </article>
-            <article>
-                <img src="../img/1.jpg" alt="IMAGE" title="IMAGE"/>
-                <h4> Пляж</h4>
-                <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                    хороший пляж </p>
-                <a href="/post?post_id=1" title="Подробнее">Подробнее</a>
-            </article>
+        </#list>
+
         </div>
         <div class="clear">
             <div id="main_soc_block">
@@ -408,12 +401,38 @@
                 </center>
             </div>
         </div>
-
     </div>
 
+</div>
+</div>
 
-</div>
-</div>
+<script type="text/javascript" language="JavaScript">
+    $('#input_req').on('input', function search() {
+        var req = $(this).val();
+        var req_type = $('#select_req_type').val();
+        $.ajax({
+            type: 'get',
+            url: "/search",
+            data: {"req": req, "req_type": req_type},
+            success: function (data, status) {
+                console.log(data);
+                $('#articles').empty();
+                data.places.map(function (place) {
+                    $('#articles').append("<article>" +
+                            "                <img src=\"" + place.photoPath + "\" alt=\"IMAGE\" title=\"IMAGE\"/>" +
+                            "                <h4>" + place.header + "</h4>" +
+                            "                <p>" + place.content + "</p>" +
+                            "                <a href=\"/place?post_id=" + place.id + "\" title=\"Подробнее\">Подробнее</a>" +
+                            "            </article>");
+                })
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+</script>
+
 <footer>
     <span class="left">Все права защищены &copy; 2017</span>
 </footer>

@@ -359,12 +359,6 @@
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 </#if>
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-default">Поиск</button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -373,9 +367,12 @@
         <div id="articles">
             <div class="well row">
                 <div class="col-lg-2">
-                    <img src="../img/user.png" width="200" height="200">
+                    <img src="${user.profile.photoPath}" width="200" height="200">
+                    <form action="/upload" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" accept="image/*">
+                        <input type="submit" class="btn btn-default pull-left" value="Загрузить" />
+                    </form>
                 </div>
-
                 <form action="/profilechange" method="post" class="col-lg-6 col-lg-offset-1">
                     <div class="form-group">
                         <label>
@@ -406,15 +403,8 @@
                 </form>
                 <button type="submit" class="btn btn-default pull-right" style="margin:10px;">Отмена</button>
                 <div class="clearfix"></div>
-                <button type="submit" class="btn btn-default pull-left" style="margin-left:30px;">Загрузить фото
-                </button>
-
-            </div>
-            <div>
-
             </div>
         </div>
-
     </div>
 </div>
 <footer>

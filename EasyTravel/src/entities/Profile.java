@@ -21,7 +21,7 @@ public class Profile {
     }
 
     public Profile(String name, String surname, String fathersName) {
-        this(0, name, surname, fathersName, "", "");
+        this(0, name, surname, fathersName, "", "/img/user.png");
     }
 
     public int getId() {

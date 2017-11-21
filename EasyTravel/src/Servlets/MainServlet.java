@@ -1,8 +1,8 @@
 package servlets;
 
-import entities.Post;
+import entities.Place;
 import helpers.RenderHelper;
-import repositories.PostRepository;
+import repositories.PlaceRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,8 +27,8 @@ public class MainServlet extends HttpServlet {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         Map<String, Object> context = new HashMap<>();
-        List<Post> posts = PostRepository.getRepository().getPosts();
-        context.put("posts", posts);
+        List<Place> places = PlaceRepository.getRepository().getPlace();
+        context.put("places", places);
         context.put("user", request.getSession().getAttribute("current_user"));
         RenderHelper.render(response, context, "Main.ftl");
     }

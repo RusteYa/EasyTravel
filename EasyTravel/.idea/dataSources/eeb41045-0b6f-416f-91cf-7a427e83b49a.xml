@@ -24,8 +24,8 @@
     </database>
     <schema id="8" parent="2" name="public">
       <ObjectId>2200</ObjectId>
-      <IntrospectionTimestamp>2017-11-21.01:57:20.600</IntrospectionTimestamp>
-      <IntrospectionStateNumber>912</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2017-11-21.22:32:41.059</IntrospectionTimestamp>
+      <IntrospectionStateNumber>1151</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -100,9 +100,9 @@
       <ObjectId>16883</ObjectId>
       <StateNumber>855</StateNumber>
     </table>
-    <table id="24" parent="8" name="post">
+    <table id="24" parent="8" name="place">
       <ObjectId>16837</ObjectId>
-      <StateNumber>826</StateNumber>
+      <StateNumber>1151</StateNumber>
     </table>
     <table id="25" parent="8" name="profile">
       <ObjectId>16806</ObjectId>
@@ -110,7 +110,7 @@
     </table>
     <table id="26" parent="8" name="topic">
       <ObjectId>16901</ObjectId>
-      <StateNumber>861</StateNumber>
+      <StateNumber>1073</StateNumber>
     </table>
     <table id="27" parent="8" name="trip">
       <ObjectId>16800</ObjectId>
@@ -369,18 +369,23 @@
       <DataType>timestamp|0</DataType>
       <StateNumber>861</StateNumber>
     </column>
-    <index id="72" parent="26" name="topic_pkey">
+    <column id="72" parent="26" name="photo_path">
+      <Position>10</Position>
+      <DataType>varchar(50)|0</DataType>
+      <StateNumber>1074</StateNumber>
+    </column>
+    <index id="73" parent="26" name="topic_pkey">
       <ObjectId>16905</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="73" parent="26" name="topic_pkey">
+    <key id="74" parent="26" name="topic_pkey">
       <ObjectId>16906</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>topic_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="74" parent="26" name="topic_users_id_fk">
+    <foreign-key id="75" parent="26" name="topic_users_id_fk">
       <ObjectId>16907</ObjectId>
       <ColNames>topicstarter_id</ColNames>
       <RefTableId>16846</RefTableId>
@@ -389,7 +394,7 @@
       <RefKeyName>user_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="75" parent="27" name="id">
+    <column id="76" parent="27" name="id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -397,43 +402,43 @@
       <SequenceName>trip_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;trip_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="76" parent="27" name="name">
+    <column id="77" parent="27" name="name">
       <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>817</StateNumber>
     </column>
-    <index id="77" parent="27" name="trip_pkey">
+    <index id="78" parent="27" name="trip_pkey">
       <ObjectId>16804</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="78" parent="27" name="trip_pkey">
+    <key id="79" parent="27" name="trip_pkey">
       <ObjectId>16805</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>trip_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="79" parent="28" name="user_id">
+    <column id="80" parent="28" name="user_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>822</StateNumber>
     </column>
-    <column id="80" parent="28" name="trip_id">
+    <column id="81" parent="28" name="trip_id">
       <Position>2</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>822</StateNumber>
     </column>
-    <column id="81" parent="28" name="visited">
+    <column id="82" parent="28" name="visited">
       <Position>3</Position>
       <DataType>boolean|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>823</StateNumber>
       <DefaultExpression>false</DefaultExpression>
     </column>
-    <foreign-key id="82" parent="28" name="users_trip_login_data_id_fk">
+    <foreign-key id="83" parent="28" name="users_trip_login_data_id_fk">
       <ObjectId>16821</ObjectId>
       <ColNames>user_id</ColNames>
       <RefTableId>16572</RefTableId>
@@ -442,7 +447,7 @@
       <RefKeyName>login_data_id_pk</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="83" parent="28" name="users_trip_trip_id_fk">
+    <foreign-key id="84" parent="28" name="users_trip_trip_id_fk">
       <ObjectId>16826</ObjectId>
       <ColNames>trip_id</ColNames>
       <RefTableId>16800</RefTableId>
@@ -451,7 +456,7 @@
       <RefKeyName>trip_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="84" parent="29" name="id">
+    <column id="85" parent="29" name="id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -459,28 +464,28 @@
       <SequenceName>user_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;user_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="85" parent="29" name="login_data_id">
+    <column id="86" parent="29" name="login_data_id">
       <Position>2</Position>
       <DataType>integer|0</DataType>
       <StateNumber>825</StateNumber>
     </column>
-    <column id="86" parent="29" name="profile_id">
+    <column id="87" parent="29" name="profile_id">
       <Position>3</Position>
       <DataType>integer|0</DataType>
       <StateNumber>825</StateNumber>
     </column>
-    <index id="87" parent="29" name="user_pkey">
+    <index id="88" parent="29" name="user_pkey">
       <ObjectId>16850</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="88" parent="29" name="user_pkey">
+    <key id="89" parent="29" name="user_pkey">
       <ObjectId>16851</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>user_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="89" parent="29" name="user_login_data_id_fk">
+    <foreign-key id="90" parent="29" name="user_login_data_id_fk">
       <ObjectId>16862</ObjectId>
       <ColNames>login_data_id</ColNames>
       <RefTableId>16572</RefTableId>
@@ -489,7 +494,7 @@
       <RefKeyName>login_data_id_pk</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="90" parent="29" name="user_profile_id_fk">
+    <foreign-key id="91" parent="29" name="user_profile_id_fk">
       <ObjectId>16867</ObjectId>
       <ColNames>profile_id</ColNames>
       <RefTableId>16806</RefTableId>

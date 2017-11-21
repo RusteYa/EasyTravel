@@ -21,8 +21,8 @@
         <servlet-class>servlets.RegistrationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PostServlet</servlet-name>
-        <servlet-class>servlets.PostServlet</servlet-class>
+        <servlet-name>PlaceServlet</servlet-name>
+        <servlet-class>servlets.PlaceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ForumServlet</servlet-name>
@@ -49,6 +49,10 @@
         <servlet-class>servlets.ProfileChangeServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>servlets.SearchServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>servlets.FileUploadServlet</servlet-class>
     </servlet>
@@ -71,8 +75,8 @@
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PostServlet</servlet-name>
-        <url-pattern>/post</url-pattern>
+        <servlet-name>PlaceServlet</servlet-name>
+        <url-pattern>/place</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ForumServlet</servlet-name>
@@ -99,6 +103,10 @@
         <url-pattern>/profilechange</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
@@ -115,7 +123,7 @@
         <servlet-name>MyTripsServlet</servlet-name>
         <servlet-name>AboutServlet</servlet-name>
         <servlet-name>ForumServlet</servlet-name>
-        <servlet-name>PostServlet</servlet-name>
+        <servlet-name>PlaceServlet</servlet-name>
         <servlet-name>ProfileServlet</servlet-name>
         <servlet-name>TopicServlet</servlet-name>
     </filter-mapping>

@@ -112,11 +112,11 @@
 
         }
 
-        #posts {
+        #places {
             float: left;
         }
 
-        #posts img {
+        #places img {
             width: 50%;
             height: 50%;
             border-radius: 5px 5px 0px 0px;
@@ -124,7 +124,7 @@
             margin-bottom: 10px;
         }
 
-        #posts p {
+        #places p {
             width: 50%;
             align: justify;
         }
@@ -347,23 +347,15 @@
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 </#if>
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-default">Поиск</button>
-                    </form>
                 </div>
             </div>
         </nav>
     </header>
-    <div id="posts">
+    <div id="places">
         <center>
-            <h2> Пляж</h2>
-            <img src="../img/post.jpg" alt="IMAGE" title="IMAGE"/>
-            <p>Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень
-                хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж
-                Это очень хороший пляж Это очень хороший пляж Это очень хороший пляж</p>
+            <h2>${place.header}</h2>
+            <img src="${place.photoPath}" alt="IMAGE" title="IMAGE"/>
+            <p>${place.content}</p>
         </center>
     </div>
     <div id="wrapper">

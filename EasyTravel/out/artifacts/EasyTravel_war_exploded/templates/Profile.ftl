@@ -357,12 +357,6 @@
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 </#if>
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-default">Поиск</button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -371,7 +365,7 @@
         <div id="articles">
             <div class="well row">
                 <div class="col-lg-2">
-                    <img src="../img/user.png" width="200" height="200">
+                    <img src="${user.profile.photoPath}" width="200" height="200">
                 </div>
                 <div class="col-lg-6 col-lg-offset-1">
                     <font size="+2"><p>${user.profile.surname} ${user.profile.name} ${user.profile.fathersName}</p></font>

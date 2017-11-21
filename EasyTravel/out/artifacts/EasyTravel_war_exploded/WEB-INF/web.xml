@@ -49,6 +49,10 @@
         <servlet-class>servlets.ProfileChangeServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>servlets.SearchServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>servlets.FileUploadServlet</servlet-class>
     </servlet>
@@ -97,6 +101,10 @@
     <servlet-mapping>
         <servlet-name>ProfileChangeServlet</servlet-name>
         <url-pattern>/profilechange</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
