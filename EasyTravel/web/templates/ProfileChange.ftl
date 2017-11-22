@@ -368,12 +368,12 @@
             <div class="well row">
                 <div class="col-lg-2">
                     <img src="${user.profile.photoPath}" width="200" height="200">
-                    <form action="/upload" method="place" enctype="multipart/form-data">
+                    <form action="/upload" method="post" enctype="multipart/form-data">
                         <input type="file" name="file" accept="image/*">
                         <input type="submit" class="btn btn-default pull-left" value="Загрузить" />
                     </form>
                 </div>
-                <form action="/profilechange" method="place" class="col-lg-6 col-lg-offset-1">
+                <form action="/profilechange" method="post" class="col-lg-6 col-lg-offset-1">
                     <div class="form-group">
                         <label>
                             Имя
