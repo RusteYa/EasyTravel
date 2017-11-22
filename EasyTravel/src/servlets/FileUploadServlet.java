@@ -50,7 +50,7 @@ public class FileUploadServlet extends HttpServlet {
         switch (path){
             case "/profilechange":
                 User user = (User) request.getSession().getAttribute("current_user");
-                user.getProfile().setPhotoPath(uploadPath + filename);
+                user.getProfile().setPhotoPath(UPLOAD_DIRECTORY + File.separator + filename);
                 ProfileRepository.getRepository().updateProfile(user.getProfile());
                 break;
         }
